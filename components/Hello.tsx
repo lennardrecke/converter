@@ -1,14 +1,23 @@
+'use client';
+
 import { currentUser } from '@clerk/nextjs';
 import React from 'react';
 
-const Hello = async () => {
+export default async function Hello() {
   const user = await currentUser();
+  const [loggedIn, setLoggedIn] = React.useState(false);
+
+  if (user) {
+    setLoggedIn(true);
+  }
 
   return (
-    <div className=''>
-      <p className=''>👋 Hello, {user?.emailAddresses[0]?.emailAddress}</p>
-    </div>
+    <>
+      {loggedIn && (
+        <div className=''>
+          <p className=''>👋 Hello, {user?.emailAddresses[0]?.emailAddress}</p>
+        </div>
+      )}
+    </>
   );
-};
-
-export default Hello;
+}
